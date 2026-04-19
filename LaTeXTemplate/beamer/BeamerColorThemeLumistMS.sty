@@ -1,0 +1,81 @@
+% Beamer LumistMS theme
+% Lumist - Mathematics and Statistics Discipline Group
+% 路觅教育 - 数学与统计学学科组
+% 
+% The LumistMS Theme
+% Copyright 2026 Guanxu (Gleason) WANG
+% Licensed under CC-BY-SA 4.0 Interational.
+%
+% The initial template comes from the HSRM beamer theme by Benjamin Weiss, which
+% you can find at https://github.com/hsrmbeamertheme/hsrmbeamertheme.
+%
+
+\ProvidesPackage{BeamerColorThemeLumistMS}
+
+
+%}}}
+%{{{ --- Options ----------------------
+
+\newif\if@beamer@LumistMS@blockbg
+\@beamer@LumistMS@blockbgfalse
+\DeclareOptionBeamer{blockbg}{\@beamer@LumistMS@blockbgtrue}
+
+\DeclareOptionBeamer*{%
+  \PackageWarning{BeamerColorThemeLumistMS}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptionsBeamer
+
+%}}}
+%{{{ --- Colors ---------------------
+
+
+%%%
+% LumistMS COLOR SCHEME
+%%%
+\definecolor{LumistMS-yellow}{HTML}{FFC844}
+\definecolor{LumistMS-orange}{HTML}{E86E2C}
+
+
+\definecolor{LumistMS-slate}{HTML}{4F5961}
+
+\definecolor{LumistMS-pillarbox}{HTML}{B30C00}
+\definecolor{LumistMS-lavendar}{HTML}{5B4D94}
+
+
+%
+\setbeamercolor{palette primary}{fg=LumistMS-yellow, bg=white}
+\setbeamercolor{palette secondary}{fg=white, bg=LumistMS-yellow}
+\setbeamercolor{palette tertiary}{fg=white, bg=LumistMS-orange}
+\setbeamercolor{palette quaternary}{fg=LumistMS-orange}
+
+\setbeamercolor{title}{parent=palette quaternary}
+\setbeamercolor{subtitle}{parent=palette quaternary}
+\setbeamercolor{author}{parent=palette quaternary}
+\setbeamercolor{date}{parent=palette quaternary}
+\setbeamercolor{institute}{parent=palette quaternary}
+
+\setbeamercolor{section title}{parent=palette primary}
+\setbeamercolor{frametitle}{parent=palette secondary}
+\setbeamercolor{background canvas}{parent=palette primary}
+\setbeamercolor{structure}{fg=LumistMS-slate}
+
+\setbeamercolor{normal text}{fg=black!97}
+\setbeamercolor{alerted text}{fg=LumistMS-pillarbox}
+
+\setbeamercolor{footnote}{fg=LumistMS-slate!50}
+\setbeamercolor{footnote mark}{fg=.}
+\setbeamercolor{page number in head/foot}{fg=LumistMS-lavendar}
+
+\if@beamer@LumistMS@blockbg
+\setbeamercolor{block title}{parent=palette primary,bg=bg!80!fg}
+\setbeamercolor{block title alerted}{use=alerted text,parent=palette primary,fg=alerted text.fg}
+\setbeamercolor{block title example}{use=example text,parent=palette primary,fg=example text.fg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg}
+
+\fi
+
+\mode<all>

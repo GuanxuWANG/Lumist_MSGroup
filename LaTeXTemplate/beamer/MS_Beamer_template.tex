@@ -1,0 +1,651 @@
+\documentclass[10pt, compress]{beamer}
+
+\usetheme{LumistMS}
+\usepackage{booktabs, subcaption}
+\usepackage[scale=2]{ccicons}
+\usepackage{minted}
+\usepackage{ctex} % 不需要中文的话可以把该行注释掉
+
+\usepgfplotslibrary{dateplot}
+
+\usemintedstyle{trac}
+
+\title{Lumist MS-Group Beamer Template}
+\subtitle{数学与统计学科组 Beamer 模版}
+\author{Guanxu (Gleason) WANG}
+\date{\today}
+\institute{Mathematics and Statistics Group,\\Lumist}
+
+\usepackage{actuarialsymbol}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{目录}
+	\tableofcontents
+\end{frame}
+
+\frame{
+	\frametitle{年金的含义和类型}
+	\framesubtitle{年金(annuity)}
+	\begin{definition}[年金]
+		一系列的付款 (或收款), 付款时间和付款金额具有一定规律性. 年金也是一种现金流. 
+	\end{definition}
+}
+
+
+\frame{
+	\frametitle{年金的含义和类型}
+	\framesubtitle{年金的类型}
+	\begin{itemize}
+		\item 支付期限? 
+		\begin{itemize}
+			\item 定期年金 (period-certain annuity)
+			\item 永续年金 (perpetuity)
+		\end{itemize}
+		\item 支付时点? 
+		\begin{itemize}
+			\item 期初付年金 (annuity-due)
+			\item 期末付年金 (annuity-immediate)
+		\end{itemize}
+		\item 开始支付的时间? 
+		\begin{itemize}
+			\item 即期年金 (immediate annuity), 简称年金
+			\item 延期年金 (deferred annuity) 
+		\end{itemize}
+		\item 每次付款的金额是否相等? 
+		\begin{itemize}
+			\item 等额年金 (level annuity)
+			\item 变额年金 (varying annuity)
+		\end{itemize}
+	\end{itemize}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{期末付年金 (annuity-immediate)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{期末付年金 (annuity-immediate)}
+	\begin{definition}[期末付年金]
+		在$n$个时期, 每个时期末付款$1$元. 
+	\end{definition}
+	
+	$\star$仍然是在first principal下定义. 
+	
+	\begin{tikzpicture}
+		% 左侧标签
+		\node at (-1.2,1.0) {年金};
+		\node at (-1.2,0.0) {时间};
+		
+		% 主时间轴
+		\draw (0,0.45) -- (6.5,0.45);
+		
+		% 刻度与时间标签
+		\foreach \x/\lab in {0/0,1/1,2/2,3/3,5.5/n-1,6.5/n}{
+			\draw (\x,0.33) -- (\x,0.57);
+			\node at (\x,-0.1) {\lab};
+		}
+		
+		% 年金支付 (从1到n) 
+		\foreach \x in {1,2,3,5.5,6.5}{
+			\node at (\x,1.0) {1};
+		}
+		
+		% 省略号
+		\node at (4.2,1.0) {$\cdots$};
+		\node at (4.2,-0.1) {$\cdots$};
+	\end{tikzpicture}
+	
+	第$t$年末的$1$元在时间零点的现值$=(1+i)^{-t}=v^t$
+}
+
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{期末付年金的现值因子(annuity-immediate present value factor)}
+	\begin{alertblock}{Notation \& Formula}
+		\[\ax{\angln i}~\text{: a-angle-n}\quad\quad\ax{\angln}= \frac{1-v^n}{i}\]
+	\end{alertblock}
+	\begin{proof}
+		\begin{equation*}
+			\begin{aligned}
+				\ax{\angln} &= v+v^2+v^3+\cdots+v^n \\
+				&= \frac{v(1-v^n)}{1-v}\\
+				&= \frac{v(1-v^n)}{iv}\\
+				&= \frac{1-v^n}{i}
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+}
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{期末付年金的累积值 (终值) 因子(annuity-immediate accumulated value factor)}
+	\begin{alertblock}{Notation \& Formula}
+		\[\sx{\angln i}~\text{: s-angle-n}\quad\quad\sx{\angln}= \frac{(1+i)^n-1}{i}\]
+	\end{alertblock}
+	\begin{proof}
+		\begin{enumerate}
+			\item 法一:
+			\begin{equation*}
+				\begin{aligned}
+					\sx{\angln} &= (1+i)^n+(1+i)^{n-1}+\cdots+(1+i)+1 \\
+					&= \frac{1\cdot[1-(1+i)^n]}{1-(1+i)}\quad= \frac{1-(1+i)^n}{-i}\\
+					&= \frac{(1+i)^n-1}{i}
+				\end{aligned}
+			\end{equation*}
+			\item 法二:
+			\[\sx{\angln}=\ax{\angln}(1+i)^n=\frac{1-v^n}{i}(1+i)^n=\frac{(1+i)^n-1}{i}\]
+		\end{enumerate}
+	\end{proof}
+}
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{等价关系式}
+	\begin{alertblock}{Formula}
+		\[1 = i\ax{\angln}+v^n\]
+	\end{alertblock}
+	\begin{proof}
+		\[i\ax{\angln}+v^n=i\cdot\frac{1-v^n}{i}+v^n=1\]
+	\end{proof}
+	
+	$\diamond$含义: 先息后本的现值与本金相等
+	
+	在$0$时刻贷款$1$, 利用先息后本方式偿还贷款. 
+	
+	于是在每期末产生利息$i$, 这些利息的现值为$i\ax{\angln}$. 同时在第$n$个时期末偿还本金$1$, 其现值为$v^n$. 
+}
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{等价关系式}
+	\begin{alertblock}{Notation \& Formula}
+		\[\frac{1}{\ax{\angln}}=\frac{1}{\sx{\angln}}+i\]
+	\end{alertblock}
+	\begin{proof}
+		\begin{equation*}
+			\begin{aligned}
+				\frac{1}{\sx{\angln}}+i &= \frac{i}{(1+i)^n-1}+i = \frac{i+i(1+i)^n-i}{(1+i)^n-1}\\
+				&= \frac{i}{1-(1+i)^{-n}} =\frac{i}{1-v^{n}} =\frac{1}{\ax{\angln}}
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	$\diamond$含义: 等额还款\&先息后本 (现值和累积值本金的分配)
+	
+	在$0$时刻贷款$1$, 等额还款下, 每期末偿还$\frac{1}{\ax{\angln}}$；先息后本下, 在每期末产生利息$i$, 并在在第$n$个时期末偿还本金$1$, 其等价于每期末偿还$\frac{1}{\sx{\angln}}$, 使其在$n$时刻价值 (累积值) 为$1$. 
+}
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{例题}
+	\begin{example}
+		银行贷出$100$万元的贷款, 期限$10$年, 年实际利率为$6\%$, 请计算在下面三种还款方式下, 银行在第$10$年末的累积值是多少? 
+		
+		假设 : 银行收到的款项仍然按$6\%$的利率进行投资
+		\begin{enumerate}
+			\item 本金和利息在第$10$年末一次还清
+			\item 每年的利息在当年末支付, 本金在第$10$年末归还
+			\item 在$10$年期内, 每年末偿还相等的金额
+		\end{enumerate}
+	\end{example}
+	
+}
+
+\frame{
+	\frametitle{期末付年金}
+	\framesubtitle{例题}
+	\begin{solution}
+		\begin{enumerate}
+			\item 直接计算$10$年末的累积值$100\times(1+0.06)^{10}=179.08$
+			\item 每期末偿还利息的累积值$+$最终偿还本金
+			\[(100\times6\%)\sx{\angl{10}}+100 = 6\times\frac{(1+0.06)^{10}-1}{0.06} = 179.08\]
+			\item 设每年末的偿还额为$R$, 则
+			\[R\ax{\angl{10}}=100\quad\Rightarrow R = 100\div\frac{1-(1+0.06)^{-10}}{0.06}\]
+			\[R\sx{\angl{10}}=R\cdot\frac{(1+0.06)^{10}-1}{0.06}=179.08\]
+		\end{enumerate}
+	\end{solution}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{期初付年金(annuity-due)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+	\frametitle{期初付年金}
+	\framesubtitle{期初付年金(annuity-due)}
+	\begin{definition}[期初付年金]
+		在$n$个时期, 每个时期初付款$1$元. 
+	\end{definition}
+	
+	\begin{tikzpicture}
+		% 左侧标签
+		\node at (-1.2,1.0) {年金};
+		\node at (-1.2,0.0) {时间};
+		
+		% 主时间轴
+		\draw (0,0.45) -- (7,0.45);
+		
+		% 刻度与时间标签
+		\foreach \x/\lab in {0/0,1/1,2/2,3/3,6/n-1,7/n}{
+			\draw (\x,0.33) -- (\x,0.57);
+			\node at (\x,-0.1) {\lab};
+		}
+		
+		% 年金支付
+		\foreach \x in {0,1,2,3,6}{
+			\node at (\x,1.0) {1};
+		}
+		
+		% 省略号
+		\node at (4.5,1.0) {$\cdots$};
+		\node at (4.5,-0.1) {$\cdots$};
+	\end{tikzpicture}
+	
+	第$t$年末的$1$元在时间零点的现值$=(1+i)^{-t}=v^t$
+}
+
+
+\frame{
+	\frametitle{期初付年金}
+	\framesubtitle{期初付年金的现值因子和累积值因子}
+	\begin{alertblock}{Notation \& Formula}
+		\[\ax**{\angln i}~\text{: a-double-dot-angle-n}\quad\quad\ax**{\angln}= \frac{1-v^n}{d}\]
+	\end{alertblock}
+	\begin{proof}
+		\[\ax**{\angln}=\ax{\angln}(1+i)=\frac{1-v^n}{i}(1+i)=\frac{1-v^n}{d}\]
+	\end{proof}
+	
+	\begin{alertblock}{Notation \& Formula}
+		\[\sx**{\angln i}~\text{: s-double-dot-angle-n}\quad\quad\sx{\angln}= \frac{(1+i)^n-1}{d}\]
+	\end{alertblock}
+	\begin{proof}
+		\[\sx**{\angln}=\ax**{\angln}(1+i)^n=\frac{(1+i)^n-1}{d}\]
+	\end{proof}
+}
+
+\frame{
+	\frametitle{期初付年金}
+	\framesubtitle{等价关系式}
+	\begin{alertblock}{Formula}
+		\[\frac{1}{\ax**{\angln}}=\frac{1}{\sx**{\angln}}+d\]
+	\end{alertblock}
+	\begin{proof}
+		\begin{equation*}
+			\begin{aligned}
+				\frac{1}{\sx**{\angln}}+d &= \frac{d}{(1+i)^n-1}+d \\
+				&= \frac{dv^n}{1-v^n}+d\\
+				&= \frac{dv^n+d-dv^n}{1-v^n} = \frac{d}{1-v^{n}} =\frac{1}{\ax**{\angln}}
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	$\diamond$含义:  (与期末付等价关系式的区别)
+	
+	先息后本下, 在每期末产生利息$i$, 等价于在每期初产生利息$iv=d$. 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{期初付与期末付年金的关系}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+	\frametitle{期初付与期末付年金的关系}
+	\framesubtitle{}
+	\begin{alertblock}{Formula}
+		\[\ax**{\angln}=1+\ax{\angl{n-1}}\]
+	\end{alertblock}
+	$\diamond$含义: 
+	
+	$\ax**{\angln}$的$n$次付款分解为第$1$次付款与后面的$(n–1)$次付款
+	
+	\begin{alertblock}{Formula}
+		\[\sx**{\angln}=\sx{\angl{n+1}}-1\]
+	\end{alertblock}
+	$\diamond$含义: 
+	
+	$n$次期初付与$n+1$次期末付累积值的差别在于期末付比期初付在第$n+1$时刻多付了一个$1$.
+}
+
+
+\frame{
+	\frametitle{期初付与期末付年金的关系}
+	\framesubtitle{}
+	\begin{example}
+		Charles has inherited an annuity-due on which there remain $12$ payments of $10,000$ per year at an effective discount rate of $5\%$; the first payment is due immediately. He wishes to convert this to a $25$-year annuity-immediate at the same effective rates of discount, with first payment due one year from now. What will be the size of the payments under the new annuity?
+	\end{example}
+	
+	\begin{solution}
+		\[d=5\%\quad\Rightarrow\quad i=\frac{d}{1-d}=\frac{0.05}{0.95}=\frac{1}{19}\]
+		令$X$为新的年金在每年末的支付额, 则有
+		\[10000\ax**{\angl{12}}=X\ax{\angl{25}}\]
+		\[X=10000\times\frac{1-(1+i)^{-12}}{d}\div\frac{1-(1+i)^{-25}}{i}=6695.61\]
+	\end{solution}
+}
+
+
+\frame{
+	\frametitle{期初付与期末付年金的关系}
+	\framesubtitle{}
+	\begin{exampleblock}{Exercise}
+		Kathryn deposits $100$ into an account at the beginning of each $4$-year period for $40$ years. 
+		
+		The account credits interest at an annual effective interest rate of $i$. 
+		
+		The accumulated amount in the account at the end of $40$ years is $X$, which is $5$ times the accumulated amount in the account at the end of $20$ years. 
+		
+		Calculate $X$.
+	\end{exampleblock}
+	
+}
+
+
+\frame{
+	\frametitle{期初付与期末付年金的关系}
+	\framesubtitle{}
+	\begin{solution}
+		The effective interest rate over a four-year period is:
+		\[j=(1+i)^4-1\]
+		\[100\sx**{\angl{10}j}=5\cdot100\sx**{\angl{5}j}\]
+		\[X=100\frac{(1+j)^{10}-1}{d_j} = 5\cdot\frac{(1+j)^5-1}{d_j} \]
+		\[\Rightarrow (1+j)^5=1(\text{deletion}) \text{ or } (i+j)^5=4 \quad\Rightarrow j=31.9508\%\]
+		\[\Rightarrow X=6194.72\]
+	\end{solution}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{延期年金(deferred annuity)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+	\frametitle{延期年金}
+	\framesubtitle{延期年金(deferred annuity)}
+	\begin{definition}[延期年金]
+		推迟m个时期后才开始付款的年金. 
+	\end{definition}
+	\begin{tikzpicture}[scale=0.9]
+		% 左侧标签
+		\node at (-1.2,1.1) {年金};
+		\node at (-1.2,0.0) {时间};
+		
+		% 主时间轴
+		\draw (0,0.45) -- (10,0.45);
+		
+		% 刻度
+		\foreach \x in {0,1.1,2.2,3.3,5.7,6.8,8.8,10}{
+			\draw (\x,0.33) -- (\x,0.57);
+		}
+		
+		% 时间标签
+		\node at (0,-0.1) {0};
+		\node at (1.1,-0.1) {1};
+		\node at (2.2,-0.1) {2};
+		\node at (3.3,-0.1) {3};
+		\node at (4.5,-0.1) {$\cdots$};
+		\node at (5.7,-0.1) {$m$};
+		\node at (6.8,-0.1) {$m\!+\!1$};
+		\node at (7.9,-0.1) {$\cdots$};
+		\node at (8.8,-0.1) {$m\!+\!n\!-\!1$};
+		\node at (10,-0.1) {$m\!+\!n$};
+		
+		% 前面是0
+		\node at (1.1,1.1) {0};
+		\node at (2.2,1.1) {0};
+		\node at (3.3,1.1) {0};
+		\node at (4.5,1.1) {$\cdots$};
+		\node at (5.7,1.1) {0};
+		
+		% 后面是1
+		\node at (6.8,1.1) {1};
+		\node at (7.9,1.1) {$\cdots$};
+		\node at (8.8,1.1) {1};
+		\node at (10,1.1) {1};
+	\end{tikzpicture}
+	\begin{alertblock}{Notation \& Formula}
+		\[\ax[m|]{\angln}= v^m\ax{\angln}=\ax{\angl{m+n}}-\ax{\angl{m}}\]
+	\end{alertblock}
+	\begin{proof}
+		\[\ax[m|]{\angln} =v^m\frac{1-v^n}{i} =\frac{v^m-v^{m+n}}{i} =\frac{(1-v^{m+n})-(1-v^m)}{i} =\ax{\angl{m+n}}-\ax{\angl{m}}\]
+	\end{proof}
+}
+
+
+\frame{
+	\frametitle{延期年金}
+	\framesubtitle{}
+	\begin{example}
+		年金共有7次付款, 每次支付1元, 分别在第3年末到第9年末. 求此年金的现值和在第12年末的积累值. 
+	\end{example}
+	\begin{solution}
+		\[\ax[2|]{\angl{7}}=v^2\ax{\angl{7}}=\ax{\angl{9}}-\ax{\angl{2}}\]
+		\[\sx{\angl{7}}(1+i)^3=\sx{\angl{10}}-\sx{\angl{3}}\]
+	\end{solution}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{永续年金(perpetuity)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{永续年金(perpetuity)}
+	\begin{definition}[永续年金]
+		无限期支付下去的年金. 
+	\end{definition}
+	\begin{alertblock}{Notation \& Formula}
+		\[\ax{\angl{\infty}}= \frac{1}{i}\]
+	\end{alertblock}
+	\begin{proof}
+		\[\ax{\angl{\infty}}= \lim\limits_{n\rightarrow\infty}\ax{\angl{n}} = \lim\limits_{n\rightarrow\infty}\frac{1-v^n}{i} = \frac{1}{i}\]
+	\end{proof}
+	$\diamond$将本金$\frac{1}{i}$按利率$i$无限期投资, 每期支付利息$\frac{1}{i}\cdot i=1$. 
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{永续年金(perpetuity)}
+	\begin{alertblock}{Notation \& Formula}
+		\[\ax**{\angl{\infty}}= \frac{1}{d}\]
+	\end{alertblock}
+	\begin{proof}
+		\[\ax**{\angl{\infty}}= \ax**{\angl{\infty}}(1+i) = \frac{1+i}{i} = \frac{1}{d}\]
+	\end{proof}
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{期末付年金与永续年金的关系}
+	$n$年的期末付年金可看作下述两个永续年金之差: \\
+	$\diamond$第一个每年末付款$1$, 现值为$\frac{1}{i}$\\
+	$\diamond$第二个延迟$n$年, 从$n+1$年开始每年支付$1$, 现值为$\frac{v^n}{i}$\\
+	因此n年的期末付年金的现值\[\ax{\angl{n}} =\ax{\angl{\infty}}-\ax[n|]{\angl{\infty}} =\frac{1}{i}-\frac{v^n}{i}=\frac{1-v^n}{i}\]
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{例题}
+	\begin{example}
+		A perpetuity paying $1$ at the beginning of each year has a present value of $20$. \\If this perpetuity is exchanged for another perpetuity paying $R$ at the beginning of every $2$ years, find $R$ so that the values of the two perpetuities are equal.
+	\end{example}
+	
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{例题}
+	\begin{solution}
+		\[\ax**{\angl{\infty}}[\text{old}]= \frac{1}{d}=20\]
+		设两年期的实际贴现率为$D$
+		\[1-D=(1-d)^2\quad\Rightarrow\quad D=1-\left(1-\frac{1}{20}\right)^2\]
+		由于新的永续年金现值$R\ax**{\angl{\infty}}[\text{new}]=R\cdot\frac{1}{D}=20$
+		\[\Rightarrow R =20D =20\left[1-\left(1-\frac{1}{20}\right)^2\right] =\frac{39}{20}\]
+	\end{solution}
+}
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{练习}
+	\begin{exampleblock}{Exercise}
+		一笔$10$万元的遗产: 
+		\begin{itemize}
+			\item 第一个$10$年将每年的利息付给受益人A
+			\item 第二个$10$年将每年的利息付给受益人B
+			\item $20$年后将每年的利息付给受益人C
+		\end{itemize}
+		遗产的年收益率为$7\%$, 请确定三个受益者的相对受益比例. 
+	\end{exampleblock}
+	
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{练习}
+	\begin{solution}
+		$10$万元每年产生的利息是$100000\times0.07=7000$元
+		\begin{itemize}
+			\item A所占的份额是\[7000\ax{\angl{10}}=49165\]
+			\item B所占的份额是\[7000\ax[10|]{\angl{10}} =7000(\ax{\angl{20}}-\ax{\angl{10}}) =24993\]
+			\item C所占的份额是\[7000\ax[20|]{\angl{\infty}} =7000(\ax{\angl{\infty}}-\ax{\angl{20}}) =25842\]
+		\end{itemize}
+		则A、B、C受益比例近似为$49\%$, $25\%$和$26\%$. 
+	\end{solution}
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{练习}
+	\begin{exampleblock}{Exercise}
+		Give an algebraic proof and a verbal explanation for the formula.
+		\[\ax[m|]{\angl{n}}=\ax{\angl{\infty}}-\ax{\angl{m}}-v^{m+n}\ax{\angl{\infty}}\]
+	\end{exampleblock}
+	\begin{solution}
+		\begin{equation*}
+			\begin{aligned}
+				\ax{\angl{\infty}}-\ax{\angl{m}}-v^{m+n}\ax{\angl{\infty}}
+				&=\frac{1}{i}-\frac{1-v^m}{i}-v^{m+n}\cdot\frac{1}{i}\\
+				&=\frac{1-(1-v^m)-v^{m+n}}{i}\\
+				&=\frac{v^m(1-v^n)}{i} ~=v^m\ax{\angl{n}} ~=\ax[m|]{\angl{n}}
+			\end{aligned}
+		\end{equation*}
+	\end{solution}
+	$\diamond$解释: 一个永续年金可以分解为三个年金之和: 
+	\[\ax[m|]{\angl{n}}=\ax{\angl{\infty}}-\ax{\angl{m}}-v^{m+n}\ax{\angl{\infty}}
+	\quad\Rightarrow\quad \ax{\angl{\infty}}=\ax{\angl{m}}+\ax[m|]{\angl{n}}+v^{m+n}\ax{\angl{\infty}}\]
+}
+
+
+\frame{
+	\frametitle{永续年金}
+	\framesubtitle{练习}
+	\begin{solution}
+		\begin{equation*}
+			\begin{aligned}
+				\ax{\angl{\infty}}-\ax{\angl{m}}-v^{m+n}\ax{\angl{\infty}}
+				&=\frac{1}{i}-\frac{1-v^m}{i}-v^{m+n}\cdot\frac{1}{i}\\
+				&=\frac{1-(1-v^m)-v^{m+n}}{i}\\
+				&=\frac{v^m(1-v^n)}{i}\\
+				&=v^m\ax{\angl{n}} =\ax[m|]{\angl{n}}
+			\end{aligned}
+		\end{equation*}
+	\end{solution}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{例题}
+	\begin{example}
+		Find the accumulated value of a $10$-year annuity-immediate of $\$100$ per year if the effective rate of interest is $5\%$ for the first $6$ years and $4\%$ for the last $4$ years. 
+	\end{example}
+	\begin{solution}
+		前六年的投资在第$6$年末的价值为$100\sx{\angl{6}@i_1=0.05}$\\
+		再按$4\%$的利率积累到第10年末的价值为$100\sx{\angl{6}@i_1=0.05}(1+0.04)^4$\\
+		后四年的投资在第10年末的累积值为$100\sx{\angl{4}@i_2=0.04}$\\
+		在第10年末的价值为\[100\left[\sx{\angl{6}0.05}(1+0.04)^4+\sx{\angl{4}0.04}\right]=1220.38\]\\
+	\end{solution}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{exampleblock}{Exercise}
+		A fund of $2500$ is to be accumulated by $n$ annual payments of $50$, followed by $n+1$ annual payments of $75$, plus a smaller final payment $X$ of not more than $75$ made $1$ year after the last regular payment. \\If the effective annual rate of interest is $5\%$, find $n$ and the amount of the final irregular payment.
+	\end{exampleblock}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{solution}
+		若将每次付款看作期末付款, 则有
+		\[50\sx{\angl{n}}(1+i)^{n+2}+75\sx{\angl{n+1}}(1+i)=2500\]\[\Rightarrow n=10.7393\]
+		令$n=10$得, \[X=2500-50\sx{\angl{10}}(1+i)^{12}-75\sx{\angl{11}}(1+i)=251.81>75\]
+		故, $n=11$, 得\[X=2500-50\sx{\angl{11}}(1+i)^{13}-75\sx{\angl{12}}(1+i)=-92.92\]
+		\[X'=2500-50\sx{\angl{11}}(1+i)^{12}-75\sx{\angl{12}}=30.55\]
+	\end{solution}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{exampleblock}{Exercise}
+		A level perpetuity-immediate is to be shared by A, B, C, and D. 
+		\begin{itemize}
+			\item A receives the first $n$ payments
+			\item B the next $2n$ payments
+			\item C payments $\#~3n+1,3n+2,\cdots,5n$
+			\item D the payments thereafter
+		\end{itemize}
+		It is known that the present values of B's and D's shares are equal. \\
+		Find the ratio of the present value of the shares of A, B, C, D.
+	\end{exampleblock}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{solution}
+		\begin{table}
+			\begin{tabular}{ll}
+				A: & $\ax{\angln}=\frac{1-v^n}{i}$ \\
+				B: & $\ax[n|]{\angl{2n}} =\ax{\angl{3n}}-\ax{\angln} =\frac{1-v^{3n}}{i}-\frac{1-v^n}{i} =\frac{v^n-v^{3n}}{i} =\frac{v^n}{i}(1-v^{2n})$ \\
+				C: & $\ax[3n|]{\angl{2n}} =v^{3n}\ax{\angl{2n}} =v^{3n}\frac{1-v^{2n}}{i}$ \\
+				D: & $\ax[5n|]{\angl{\infty}} =v^{5n}\ax{\angl{\infty}} =\frac{v^{5n}}{i}$ 
+			\end{tabular}
+		\end{table}
+		\[\text{B}=\text{D} \quad\Rightarrow\quad \frac{v^n}{i}(1-v^{2n})=\frac{v^{5n}}{i} \quad\Rightarrow\quad v^n=0.78615\]
+		\begin{equation*}
+			\begin{aligned}
+				\text{A}:\text{B}:\text{C}:\text{D} &=(1-v^n):(v^n-v^{3n}):(v^{3n}-v^{5n}):(v^{5n})\\
+				&=0.2138:0.3003:0.1856:0.3003
+			\end{aligned}
+		\end{equation*}
+	\end{solution}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{exampleblock}{Exercise}
+		一笔$50000$元的贷款, 计划在今后的$5$年内按月偿还, 如果年实际利率为$6\%$, 请计算每月末的付款金额.   (应用基本公式) 
+	\end{exampleblock}
+}
+
+\frame{
+	\frametitle{可变利率年金}
+	\framesubtitle{练习}
+	\begin{solution}
+		年实际利率为$6\%$, 设月实际利率$j$, 有
+		\[1+6\%=(1+j)^{12}\quad\Rightarrow\quad j=0.4868\%\]
+		设每月偿还金额$X$元, 则有
+		\[50000=X\ax{\angl{12\times5}@j}\quad\Rightarrow\quad X=50000\div\ax{\angl{60}@j}=962.95\]
+	\end{solution}
+}
+
+
+\plain{Thank you!}
+
+\end{document}
